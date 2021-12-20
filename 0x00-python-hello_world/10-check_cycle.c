@@ -10,16 +10,19 @@
 
 int check_cycle(listint_t *list)
 {
-	listint_t *search = list, *start = list;
+	listint_t *search = list;
 
 	while (search && search->next)
 	{
-		while (start != search && start != search->next)
-			start = start->next;
-		if (start == search->next)
+		if (search)
+			search = search->next;
+		if (search != list)
+		{
+			search = search->next;
+			list = list->next;
+		}
+		else
 			return (1);
-		start = list;
-		search = search->next;
 	}
 
 	return (0);
