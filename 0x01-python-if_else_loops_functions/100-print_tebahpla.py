@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 char = 122
 while char > 96:
     if char % 2 != 0:
