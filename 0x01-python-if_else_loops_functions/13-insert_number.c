@@ -41,7 +41,7 @@ listint_t *insert_node(listint_t **head, int number)
 
 
 /**
-* add_nodeint - adding a new node at the beginnig of the linked list
+* add_nodeint - adding a new node at the beginning of the linked list
 * @head: addres of the linked list
 * @n: value to add to the linked list
 * Return: address of the new node
