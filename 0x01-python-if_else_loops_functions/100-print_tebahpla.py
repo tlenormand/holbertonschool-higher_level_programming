@@ -1,9 +1,6 @@
 #!/usr/bin/python3
-char = 122
-while char > 96:
+for char in range(122, 96, -1):
     if char % 2 != 0:
-        alphabet = char - 32
+        print("{}".format(chr(char - 32)), end="")
     else:
-        alphabet = char
-    print("{}".format(chr(alphabet)), end="")
-    char -= 1
+        print("{}".format(chr(char)), end="")
