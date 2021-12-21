@@ -5,5 +5,5 @@ while char > 96:
         alphabet = char - 32
     else:
         alphabet = char
-    print("{}".format(chr(alphabet)), end = "")
+    print("{}".format(chr(alphabet)), end="")
     char -= 1
