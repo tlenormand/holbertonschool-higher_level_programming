@@ -15,7 +15,8 @@ if __name__ == "__main__":
     functions = [add(a, b), sub(a, b), mul(a, b), div(a, b)]
 
     if any(sys.argv[2] in s for s in operators):
-        print(functions[operators.index(sys.argv[2])])
+        result = functions[operators.index(sys.argv[2])]
+        print("{} {} {} = {}".format(a, sys.argv[2], b, result))
     else:
         print("Unknown operator. Available operators: +, -, * and /")
         exit(1)
