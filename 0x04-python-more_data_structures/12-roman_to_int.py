@@ -5,6 +5,13 @@ def roman_to_int(roman_string):
         }
     result = 0
 
+    if not roman_string:
+        return 0
+
+    for i in range(len(roman_string)):
+        if roman_string[i] not in roman_numerals:
+            return 0
+
     for i, c in enumerate(roman_string):
         if ((i + 1) == len(roman_string) or
                 roman_numerals[c] >= roman_numerals[roman_string[i + 1]]):
