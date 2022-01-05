@@ -5,7 +5,7 @@ def roman_to_int(roman_string):
         }
     result = 0
 
-    if not roman_string:
+    if not roman_string or isinstance(roman_string, int):
         return 0
 
     for i in range(len(roman_string)):
