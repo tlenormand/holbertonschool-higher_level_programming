@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""function that returns the weighted average of all integers tuple (<score>, <weight>)
+"""function that returns the weighted average of all integers tuple
+(<score>, <weight>)
 
     Args:
         my_list: list of integer
