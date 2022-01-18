@@ -12,13 +12,17 @@ class MagicClass:
         self.__radius = radius
 
     def area(self):
-        """access to the area
+        """
+        access to the area
 
-        Return: the area"""
+        Return: the area
+        """
         return self.__radius ** 2 * math.pi
 
     def circumference(self):
-        """access to the circumference
+        """
+        access to the circumference
 
-        Return: the circumference"""
+        Return: the circumference
+        """
         return 2 * math.pi * self.__radius

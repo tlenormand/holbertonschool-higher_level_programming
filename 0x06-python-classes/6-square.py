@@ -3,20 +3,23 @@
 
 
 class Square:
-    """class Square that defines a square
+    """
+    class Square that defines a square
 
     Attributes:
         __size: size of a side of the square
     """
     # initialisation of the Square class
     def __init__(self, size=0, position=(0, 0)):
-        """Init a square
+        """
+        Init a square
 
         Args:
             size (int): size of the square
             position (tuple): start position of the Square
 
-        Returns: None"""
+        Returns: None
+        """
         # initialisation of an object size
         if not isinstance(size, int):
             raise TypeError("size must be an integer")
@@ -36,16 +39,20 @@ class Square:
 
     # calculation of the area
     def area(self):
-        """square area
+        """
+        square area
 
-        Returns: the current square area"""
+        Returns: the current square area
+        """
         return self.__size * self.__size
 
     # prints in stdout the square with the character '#'
     def my_print(self):
-        """print the Square in '#' on stdout
+        """
+        print the Square in '#' on stdout
 
-        Returns: the size of the Square"""
+        Returns: the size of the Square
+        """
         if not self.__size:
             print()
         else:
@@ -62,28 +69,34 @@ class Square:
     @property
     # return his private attribute size
     def size(self):
-        """access to size
+        """
+        access to size
 
-        Returns: the size of the Square"""
+        Returns: the size of the Square
+        """
         return self.__size
 
     @property
     # return his private attribute position
     def position(self):
-        """access to position
+        """
+        access to position
 
-        Returns: the position of the Square"""
+        Returns: the position of the Square
+        """
         return self.position
 
     @size.setter
     # change the value of his private attribute size
     def size(self, value):
-        """change the size
+        """
+        change the size
 
         args:
             value: value of the new size
 
-        Returns: None"""
+        Returns: None
+        """
         if not isinstance(value, int):
             raise TypeError("size must be an integer")
 
@@ -95,12 +108,14 @@ class Square:
     @position.setter
     # change the value of his private attribute position
     def position(self, value):
-        """change the position
+        """
+        change the position
 
         args:
             value: value of the new position
 
-        Returns: None"""
+        Returns: None
+        """
         tuple_check = True
         for i in range(0, len(value)):
             if not isinstance(value[i], int) or value[i] < 0:

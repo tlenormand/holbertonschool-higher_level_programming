@@ -3,19 +3,22 @@
 
 
 class Square:
-    """class Square that defines a square
+    """
+    class Square that defines a square
 
     Attributes:
         __size: size of a side of the square
     """
     # initialisation of an object size
     def __init__(self, size=0):
-        """Init a square
+        """
+        Init a square
 
         Args:
             size (int): size of the square
 
-        Returns: None"""
+        Returns: None
+        """
         if not isinstance(size, int):
             raise TypeError("size must be an integer")
 
@@ -26,28 +29,34 @@ class Square:
 
     # calculation of the area
     def area(self):
-        """square area
+        """
+        square area
 
-        Returns: the current square area"""
+        Returns: the current square area
+        """
         return self.__size * self.__size
 
     @property
     # return his private attribute size
     def size(self):
-        """access to size
+        """
+        access to size
 
-        Returns: the size of the Square"""
+        Returns: the size of the Square
+        """
         return self.__size
 
     @size.setter
     # change the value of his private attribute size
     def size(self, value):
-        """change the size
+        """
+        change the size
 
         args:
             value: value of the new size
 
-        Returns: None"""
+        Returns: None
+        """
         if not isinstance(value, int):
             raise TypeError("size must be an integer")
 
