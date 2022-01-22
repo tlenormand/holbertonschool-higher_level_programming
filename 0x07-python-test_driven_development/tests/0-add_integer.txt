@@ -1,0 +1,88 @@
+this is a file test for the "add_integer(a, b=98)" function
+execute with: python3 -m doctest -v ./tests/0-add_integer.txt
+
+##########################################################
+import the module
+    >>> add_integer = __import__('0-add_integer').add_integer
+
+check for documentation:
+	>>> module_documentation = __import__("0-add_integer").__doc__
+	>>> print(len(module_documentation) > 0)
+	True
+
+	>>> function_documentation = __import__("0-add_integer").__doc__
+	>>> print(len(function_documentation) > 0)
+	True
+
+##########################################################
+try differents working additions
+    two positive integer
+        >>> add_integer(12, 2)
+        14
+
+    one positive and one negative integer
+        >>> add_integer(12, -2)
+        10
+
+    two negatives integers
+        >>> add_integer(-12, -2)
+        -14
+
+    with only one integer
+        >>> add_integer(10)
+        108
+
+    two positive floats
+        >>> add_integer(100.3, 100.31)
+        200
+
+    two negative floats
+        >>> add_integer(-100.3, -100.31)
+        -200
+
+##########################################################
+try differents no-working additions
+    one number and one string
+        >>> add_integer(-12, "Hello")
+        Traceback (most recent call last):
+        TypeError: b must be an integer
+
+    one string only
+        >>> add_integer("Hello")
+        Traceback (most recent call last):
+        TypeError: a must be an integer
+
+    three arguments
+        >>> add_integer(1, 2, 3)
+        Traceback (most recent call last):
+        TypeError: add_integer() takes from 1 to 2 positional arguments but 3 were given
+
+    a is a list
+        >>> add_integer([1, 2], 3)
+        Traceback (most recent call last):
+        TypeError: a must be an integer
+
+    b is a list
+        >>> add_integer(1, [2, 3])
+        Traceback (most recent call last):
+        TypeError: b must be an integer
+
+    a is a tuple
+        >>> add_integer((1, 2), 3)
+        Traceback (most recent call last):
+        TypeError: a must be an integer
+
+    b is a tuple
+        >>> add_integer(1, (2, 3))
+        Traceback (most recent call last):
+        TypeError: b must be an integer
+
+    two None
+        >>> add_integer(None, None)
+        Traceback (most recent call last):
+        TypeError: a must be an integer
+
+    Error overflow
+        >>> add_integer(float("-inf"), 3)
+        Traceback (most recent call last):
+        OverflowError: cannot convert float infinity to integer

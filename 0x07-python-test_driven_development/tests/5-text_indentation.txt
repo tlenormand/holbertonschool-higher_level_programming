@@ -1,0 +1,155 @@
+this is a file test for the "text_indentation(text)" function
+execute with: python3 -m doctest -v ./tests/5-text_indentation.txt
+
+##########################################################
+import the module:
+	>>> text_indentation = __import__('5-text_indentation').text_indentation
+
+check for documentation:
+	>>> module_documentation = __import__("5-text_indentation").__doc__
+	>>> print(len(module_documentation) > 0)
+	True
+
+	>>> function_documentation = __import__("5-text_indentation").__doc__
+	>>> print(len(function_documentation) > 0)
+	True
+
+##########################################################
+try differents working text
+    text
+        >>> text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quonam modo? Utrum igitur tibi litteram videor an totas paginas commovere? Non autem hoc: igitur ne illud quidem. Fortasse id optimum, sed ubi illud: Plus semper voluptatis? Teneo, inquit, finem illi videri nihil dolere. Transfer idem ad modestiam vel temperantiam, quae est moderatio cupiditatum rationi oboediens. Si id dicis, vicimus. Inde sermone vario sex illa a Dipylo stadia confecimus. Sin aliud quid voles, postea. Quae animi affectio suum cuique tribuens atque hanc, quam dico. Utinam quidem dicerent alium alio beatiorem! Iam ruinas videres"
+        >>> text_indentation(text)
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        <BLANKLINE>
+        Quonam modo?
+        <BLANKLINE>
+        Utrum igitur tibi litteram videor an totas paginas commovere?
+        <BLANKLINE>
+        Non autem hoc:
+        <BLANKLINE>
+        igitur ne illud quidem.
+        <BLANKLINE>
+        Fortasse id optimum, sed ubi illud:
+        <BLANKLINE>
+        Plus semper voluptatis?
+        <BLANKLINE>
+        Teneo, inquit, finem illi videri nihil dolere.
+        <BLANKLINE>
+        Transfer idem ad modestiam vel temperantiam, quae est moderatio cupiditatum rationi oboediens.
+        <BLANKLINE>
+        Si id dicis, vicimus.
+        <BLANKLINE>
+        Inde sermone vario sex illa a Dipylo stadia confecimus.
+        <BLANKLINE>
+        Sin aliud quid voles, postea.
+        <BLANKLINE>
+        Quae animi affectio suum cuique tribuens atque hanc, quam dico.
+        <BLANKLINE>
+        Utinam quidem dicerent alium alio beatiorem! Iam ruinas videres
+
+    text with no spaces
+        >>> text = "Loremipsumdolorsitamet,consecteturadipiscingelit.Quonammodo?Utrumigiturtibilitteramvideorantotaspaginascommovere?Nonautemhoc:igiturneilludquidem.Fortasseidoptimum,sedubiillud:Plussempervoluptatis?Teneo,inquit"
+        >>> text_indentation(text)
+        Loremipsumdolorsitamet,consecteturadipiscingelit.
+        <BLANKLINE>
+        Quonammodo?
+        <BLANKLINE>
+        Utrumigiturtibilitteramvideorantotaspaginascommovere?
+        <BLANKLINE>
+        Nonautemhoc:
+        <BLANKLINE>
+        igiturneilludquidem.
+        <BLANKLINE>
+        Fortasseidoptimum,sedubiillud:
+        <BLANKLINE>
+        Plussempervoluptatis?
+        <BLANKLINE>
+        Teneo,inquit
+
+    text with double spaces
+        >>> text = "Loremipsumdolorsitamet,consecteturadipiscingelit.  Quonammodo?  Utrumigiturti  bilitteramvideorant   ?  Nonautemhoc  :  igiturneilludquidem.Fortasseidoptimum,  sedubiillud:  Plussempervoluptatis?Teneo,inquit"
+        >>> text_indentation(text)
+        Loremipsumdolorsitamet,consecteturadipiscingelit.
+        <BLANKLINE>
+        Quonammodo?
+        <BLANKLINE>
+        Utrumigiturti  bilitteramvideorant   ?
+        <BLANKLINE>
+        Nonautemhoc  :
+        <BLANKLINE>
+        igiturneilludquidem.
+        <BLANKLINE>
+        Fortasseidoptimum,  sedubiillud:
+        <BLANKLINE>
+        Plussempervoluptatis?
+        <BLANKLINE>
+        Teneo,inquit
+
+    text with more spaces
+        >>> text = "Loremipsumdolors    itamet,consecteturadipi scingelit.  Quonammodo?  Utrumigit  urti  bilitter      amvideorant   ?  Nonautemhoc  :  igiturneilludquidem.Fortasseidoptimum,  sedubiillud:  Plussempervoluptatis?Teneo,inquit"
+        >>> text_indentation(text)
+        Loremipsumdolors    itamet,consecteturadipi scingelit.
+        <BLANKLINE>
+        Quonammodo?
+        <BLANKLINE>
+        Utrumigit  urti  bilitter      amvideorant   ?
+        <BLANKLINE>
+        Nonautemhoc  :
+        <BLANKLINE>
+        igiturneilludquidem.
+        <BLANKLINE>
+        Fortasseidoptimum,  sedubiillud:
+        <BLANKLINE>
+        Plussempervoluptatis?
+        <BLANKLINE>
+        Teneo,inquit
+
+    spacial char text
+        >>> text = "??:,.,,/:..,?"
+        >>> text_indentation(text)
+        ?
+        <BLANKLINE>
+        ?
+        <BLANKLINE>
+        :
+        <BLANKLINE>
+        ,.
+        <BLANKLINE>
+        ,,/:
+        <BLANKLINE>
+        .
+        <BLANKLINE>
+        .
+        <BLANKLINE>
+        ,?
+        <BLANKLINE>
+
+    space at the beginning
+        >>> text = "     Hello."
+        >>> text_indentation(text)
+        Hello.
+        <BLANKLINE>
+
+    space at the end
+        >>> text = "Hello.          "
+        >>> text_indentation(text)
+        Hello.
+        <BLANKLINE>
+
+    empty text
+        >>> text = ""
+        >>> text_indentation(text)
+
+##########################################################
+try differents no-working text
+    int text
+        >>> text = 12
+        >>> text_indentation(text)
+        Traceback (most recent call last):
+        TypeError: text must be a string
+
+    None text
+        >>> text = None
+        >>> text_indentation(text)
+        Traceback (most recent call last):
+        TypeError: text must be a string
