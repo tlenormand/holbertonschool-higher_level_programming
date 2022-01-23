@@ -23,16 +23,6 @@ try differents working multiplications
         >>> matrix_mul([[0, 1], [0, 0]], [[0, 0], [1, 0]])
         [[1, 0], [0, 0]]
 
-    with differents length of matrices of positive integers
-        >>> matrix_mul([[1, 2]], [[3, 4], [5, 6]])
-        [[13, 16]]
-
-        >>> matrix_mul([[0, 1, 0, 0], [0, 0, 1, 0]], [[0, 0], [1, 0]])
-        [[1, 0], [0, 0]]
-
-        >>> matrix_mul([[1, 2, 3, 4, 5, 6, 7, 8], [9, 10, 11, 12, 13, 14, 15, 16]], [[1, 2, 3, 4], [5, 6, 7, 8]])
-        [[11, 14, 17, 20], [59, 78, 97, 116]]
-
     with negative integers
         >>> matrix_mul([[-1, 2], [3, -4]], [[-1, -2], [3, 4]])
         [[7, 10], [-15, -22]]
@@ -166,3 +156,18 @@ try differents no-working multiplications
             >>> matrix_mul([[1, 2], [3, 4]], [[1, "world"], [3, 4]])
             Traceback (most recent call last):
             TypeError: m_b should contain only integers or floats
+
+==========================================================
+    Error: ValueError: m_a and m_b can't be multiplied
+        with differents length of matrices of positive integers
+            >>> matrix_mul([[1, 2]], [[3, 4], [5, 6]])
+            Traceback (most recent call last):
+            ValueError: m_a and m_b can't be multiplied
+
+            >>> matrix_mul([[0, 1, 0, 0], [0, 0, 1, 0]], [[0, 0], [1, 0]])
+            Traceback (most recent call last):
+            ValueError: m_a and m_b can't be multiplied
+
+            >>> matrix_mul([[1, 2, 3, 4, 5, 6, 7, 8], [9, 10, 11, 12, 13, 14, 15, 16]], [[1, 2, 3, 4], [5, 6, 7, 8]])
+            Traceback (most recent call last):
+            ValueError: m_a and m_b can't be multiplied

@@ -61,6 +61,10 @@ def matrix_mul(m_a, m_b):
     if not check_row_matrix(m_b):
         raise TypeError("each row of m_b must be of the same size")
 
+    # check if dimention of m_a == dimension of m_b
+    if len(m_a) != len(m_b) or len(m_a[0]) != len(m_b[0]):
+        raise ValueError("m_a and m_b can't be multiplied")
+
     # create a new matrix c for the multiplication of m_a * m_b
     m_c = new_matrix(m_a, m_b)
 
