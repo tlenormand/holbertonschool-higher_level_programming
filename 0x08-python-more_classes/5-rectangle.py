@@ -56,6 +56,9 @@ class Rectangle:
         """
         str_rectangle = ""
 
+        if not self.__height or not self.__width:
+            return ""
+
         for y in range(self.__height):
             for x in range(self.__width):
                 str_rectangle += '#'
