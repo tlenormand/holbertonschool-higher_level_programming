@@ -67,93 +67,90 @@ try differents no-working multiplications
         with m_a not a list
             >>> lazy_matrix_mul(1, [[1, 2], [3, 4]])
             Traceback (most recent call last):
-            TypeError: m_a must be a list
+            ValueError: Scalar operands are not allowed, use '*' instead
 
         with m_b not a list
             >>> lazy_matrix_mul([[1, 2], [3, 4]], 1)
             Traceback (most recent call last):
-            TypeError: m_b must be a list
+            ValueError: Scalar operands are not allowed, use '*' instead
 
         with m_a and m_b not a list
             >>> lazy_matrix_mul(1, 1)
             Traceback (most recent call last):
-            TypeError: m_a must be a list
+            ValueError: Scalar operands are not allowed, use '*' instead
 
 ==========================================================
     Error: TypeError: <matrix> must be a list of lists
         with m_a not a list of lists
             >>> lazy_matrix_mul([1, 2], [[1, 2], [3, 4]])
-            Traceback (most recent call last):
-            TypeError: m_a must be a list of lists
+            array([ 7, 10])
 
         with m_b not a list of lists
             >>> lazy_matrix_mul([[1, 2], [3, 4]], [1, 2])
-            Traceback (most recent call last):
-            TypeError: m_b must be a list of lists
+            array([ 5, 11])
 
         with m_a and m_b not a list of lists
             >>> lazy_matrix_mul([1, 2], [1, 2])
-            Traceback (most recent call last):
-            TypeError: m_a must be a list of lists
+            5
 
         with m_a not a list of lists and m_b not a list
             >>> lazy_matrix_mul([1, 2], 1)
             Traceback (most recent call last):
-            TypeError: m_b must be a list
+            ValueError: Scalar operands are not allowed, use '*' instead
 
 ==========================================================
     Error: ValueError: <matrix> can't be empty
         with m_a = []
             >>> lazy_matrix_mul([], [[1, 2], [3, 4]])
             Traceback (most recent call last):
-            ValueError: m_a can't be empty
+            ValueError: shapes (0,) and (2,2) not aligned: 0 (dim 0) != 2 (dim 0)
 
         with m_a = [[]]
             >>> lazy_matrix_mul([[]], [[1, 2], [3, 4]])
             Traceback (most recent call last):
-            ValueError: m_a can't be empty
+            ValueError: shapes (1,0) and (2,2) not aligned: 0 (dim 1) != 2 (dim 0)
 
         with m_b = []
             >>> lazy_matrix_mul([[1, 2], [3, 4]], [])
             Traceback (most recent call last):
-            ValueError: m_b can't be empty
+            ValueError: shapes (2,2) and (0,) not aligned: 2 (dim 1) != 0 (dim 0)
 
         with m_b = [[]]
             >>> lazy_matrix_mul([[1, 2], [3, 4]], [[]])
             Traceback (most recent call last):
-            ValueError: m_b can't be empty
+            ValueError: shapes (2,2) and (1,0) not aligned: 2 (dim 1) != 1 (dim 0)
 
         with m_a = [] and m_b not a list
             >>> lazy_matrix_mul([], 1)
             Traceback (most recent call last):
-            TypeError: m_b must be a list
+            ValueError: Scalar operands are not allowed, use '*' instead
 
         with m_a = [] and m_b not a list of lists
             >>> lazy_matrix_mul([], [1, 2])
             Traceback (most recent call last):
-            TypeError: m_b must be a list of lists
+            ValueError: shapes (0,) and (2,) not aligned: 0 (dim 0) != 2 (dim 0)
 
 ==========================================================
     Error: TypeError: <matrix> should contain only integers or floats
         with m_a not only integers
             >>> lazy_matrix_mul([[1, 2], [3, "hello"]], [[1, 2], [3, 4]])
             Traceback (most recent call last):
-            TypeError: m_a should contain only integers or floats
+            TypeError: invalid data type for einsum
 
         with m_b not only integers
             >>> lazy_matrix_mul([[1, 2], [3, 4]], [[1, "world"], [3, 4]])
             Traceback (most recent call last):
-            TypeError: m_b should contain only integers or floats
+            TypeError: invalid data type for einsum
 
         with m_a and m_b not only integers
             >>> lazy_matrix_mul([[1, 2], [3, "hello"]], [[1, 2], ["world", 4]])
             Traceback (most recent call last):
-            TypeError: m_a should contain only integers or floats
+            TypeError: invalid data type for einsum
 
         with m_a not only integers and m_b = [[]]
             >>> lazy_matrix_mul([[1, 2], [3, 4]], [[]])
             Traceback (most recent call last):
-            ValueError: m_b can't be empty
+            ValueError: shapes (2,2) and (1,0) not aligned: 2 (dim 1) != 1 (dim 0)
 
 ==========================================================
     Error: TypeError: each row of <matrix> must be of the same size
@@ -175,4 +172,4 @@ try differents no-working multiplications
         with m_a not the same size and m_b not only integers
             >>> lazy_matrix_mul([[1, 2], [3, 4]], [[1, "world"], [3, 4]])
             Traceback (most recent call last):
-            TypeError: m_b should contain only integers or floats
+            TypeError: invalid data type for einsum
