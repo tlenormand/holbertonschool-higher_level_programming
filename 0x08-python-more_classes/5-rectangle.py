@@ -37,8 +37,8 @@ class Rectangle:
 
         Returns: None
         """
-        self.__height = height
-        self.__width = width
+        self.height = height
+        self.width = width
 
     def __del__(self):
         """
