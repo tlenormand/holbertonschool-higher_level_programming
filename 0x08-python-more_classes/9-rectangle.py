@@ -47,9 +47,9 @@ class Rectangle:
 
         Returns: None
         """
+        Rectangle.number_of_instances += 1
         self.height = height
         self.width = width
-        Rectangle.number_of_instances += 1
 
     def __del__(self):
         """
@@ -185,4 +185,4 @@ class Rectangle:
 
         Returns: new Rectangle instance with width == height == size
         """
-        return cls(size, size)
+        return Rectangle(size, size)
