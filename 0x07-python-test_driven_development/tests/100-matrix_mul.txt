@@ -49,13 +49,28 @@ try differents no-working multiplications
             Traceback (most recent call last):
             TypeError: m_a must be a list
 
+        with m_a not a list
+            >>> matrix_mul(None, [[1, 2], [3, 4]])
+            Traceback (most recent call last):
+            TypeError: m_a must be a list
+
         with m_b not a list
             >>> matrix_mul([[1, 2], [3, 4]], 1)
             Traceback (most recent call last):
             TypeError: m_b must be a list
 
+        with m_b not a list
+            >>> matrix_mul([[1, 2], [3, 4]], None)
+            Traceback (most recent call last):
+            TypeError: m_b must be a list
+
         with m_a and m_b not a list
             >>> matrix_mul(1, 1)
+            Traceback (most recent call last):
+            TypeError: m_a must be a list
+
+        with m_a and m_b not a list
+            >>> matrix_mul(None, None)
             Traceback (most recent call last):
             TypeError: m_a must be a list
 
