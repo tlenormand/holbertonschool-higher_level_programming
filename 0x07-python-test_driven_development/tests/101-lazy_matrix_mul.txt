@@ -49,6 +49,18 @@ try differents working multiplications
         array([[  -inf,   -inf],
                [-17.04, -24.  ]])
 
+    Differents size of matrix
+        >>> lazy_matrix_mul([[1, 2], [1, 3], [2, 4]], [[3, 4, 4], [5, 6, 4]])
+        array([[13, 16, 12],
+               [18, 22, 16],
+               [26, 32, 24]])
+
+    with inf and nan
+        >>> lazy_matrix_mul([[1, 2], [1, 3], [2, float('-inf')]], [[3, 4, float('inf')], [5, 6, 4]])
+        array([[ 13.,  16.,  inf],
+               [ 18.,  22.,  inf],
+               [-inf, -inf,  nan]])
+
 ##########################################################
 try differents no-working multiplications
 
