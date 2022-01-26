@@ -40,6 +40,10 @@ try differents working additions
         >>> add_integer(-100.3, -100.31)
         -200
 
+    negative integer and float
+        >>> add_integer(-4, 2.3)
+        -1
+
 ##########################################################
 try differents no-working additions
     one number and one string
