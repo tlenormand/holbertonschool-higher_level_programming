@@ -73,7 +73,7 @@ Error: TypeError: <name> must be an integer
         Traceback (most recent call last):
         TypeError: my_int must be an integer
 
-    test a dict:
+    test a set:
         >>> bg.integer_validator("my_int", {"hello", "world"})
         Traceback (most recent call last):
         TypeError: my_int must be an integer
