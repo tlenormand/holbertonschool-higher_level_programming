@@ -70,6 +70,11 @@ try differents no-working text
         Traceback (most recent call last):
         TypeError: my_int must be an integer
 
+    test a dict:
+        >>> bg.integer_validator("my_int", {"hello", "world"})
+        Traceback (most recent call last):
+        TypeError: my_int must be an integer
+
     test complex:
         >>> bg.integer_validator("my_int", complex(1, 2))
         Traceback (most recent call last):
@@ -105,5 +110,16 @@ try differents no-working text
         Traceback (most recent call last):
         TypeError: integer_validator() takes 3 positional arguments but 4 were given
 
+    with number = 0
+    Error: ValueError: My_int must be greater than 0
+        >>> bg.integer_validator("My_int", 0)
+        Traceback (most recent call last):
+        ValueError: My_int must be greater than 0
+
+    with negative number
+    Error: ValueError: My_int must be greater than 0
+        >>> bg.integer_validator("My_int", -1)
+        Traceback (most recent call last):
+        ValueError: My_int must be greater than 0
 
 
