@@ -83,6 +83,11 @@ Error: TypeError: <name> must be an integer
         Traceback (most recent call last):
         TypeError: my_int must be an integer
 
+    test boolean:
+        >>> bg.integer_validator("my_int", True)
+        Traceback (most recent call last):
+        TypeError: my_int must be an integer
+
 ==================================================
 Error: NameError: name 'area' is not defined
 ==================================================
