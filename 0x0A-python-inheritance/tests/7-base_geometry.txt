@@ -1,0 +1,66 @@
+this is a file test for the "7-base_geometry" file
+execute with: python3 -m doctest -v ./tests/7-base_geometry.txt
+
+##########################################################
+import the module:
+	>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
+check for documentation:
+	>>> module_documentation = __import__("7-base_geometry").__doc__
+	>>> print(len(module_documentation) > 0)
+	True
+
+	>>> function_documentation = __import__("7-base_geometry").__doc__
+	>>> print(len(function_documentation) > 0)
+	True
+
+##########################################################
+try differents working text
+    >>> bg = BaseGeometry()
+
+    >>> len('print(__import__("7-base_geometry").__doc__)') > 1
+    True
+
+    >>> len('print(__import__("7-base_geometry").BaseGeometry.__doc__)') > 1
+    True
+
+    >>> len('print(__import__("7-base_geometry").BaseGeometry.area.__doc__)') > 1
+    True
+
+    >>> len('print(__import__("7-base_geometry").BaseGeometry.integer_validator.__doc__)') > 1
+    True
+
+    >>> bg.integer_validator("my_int", 12)
+    >>> bg.integer_validator("width", 89)
+    >>> bg.area()
+    Traceback (most recent call last):
+    Exception: area() is not implemented
+
+##########################################################
+try differents no-working text
+    Error: TypeError: <name> must be an integer
+        >>> bg.integer_validator("distance", None)
+        Traceback (most recent call last):
+        TypeError: distance must be an integer
+
+        >>> bg.integer_validator("distance", 3.5)
+        Traceback (most recent call last):
+        TypeError: distance must be an integer
+
+        >>> bg.integer_validator("distance", -3.5)
+        Traceback (most recent call last):
+        TypeError: distance must be an integer
+
+        >>> bg.integer_validator("distance", "hello")
+        Traceback (most recent call last):
+        TypeError: distance must be an integer
+
+    Error: missing argument
+        >>> bg.integer_validator("distance")
+        Traceback (most recent call last):
+        TypeError: integer_validator() missing 1 required positional argument: 'value'
+
+    Error: too many arguments
+        >>> bg.integer_validator("distance", 3, 4)
+        Traceback (most recent call last):
+        TypeError: integer_validator() takes 3 positional arguments but 4 were given
