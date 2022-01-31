@@ -4,19 +4,11 @@ execute with: python3 -m doctest -v ./tests/7-base_geometry.txt
 ##########################################################
 import the module:
 	>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+    >>> bg = BaseGeometry()
 
 check for documentation:
-	>>> module_documentation = __import__("7-base_geometry").__doc__
-	>>> print(len(module_documentation) > 0)
+	>>> print(len(__import__("7-base_geometry").__doc__) > 0)
 	True
-
-	>>> function_documentation = __import__("7-base_geometry").__doc__
-	>>> print(len(function_documentation) > 0)
-	True
-
-##########################################################
-try differents working text
-    >>> bg = BaseGeometry()
 
     >>> len('print(__import__("7-base_geometry").__doc__)') > 1
     True
@@ -30,27 +22,38 @@ try differents working text
     >>> len('print(__import__("7-base_geometry").BaseGeometry.integer_validator.__doc__)') > 1
     True
 
+##########################################################
+try differents working text
+##########################################################
+
     >>> bg.integer_validator("my_int", 12)
+
     >>> bg.integer_validator("width", 89)
-    >>> bg.area()
-    Traceback (most recent call last):
-    Exception: area() is not implemented
 
 ##########################################################
 try differents no-working text
-    Error: TypeError: <name> must be an integer
+##########################################################
+
+==================================================
+Error: TypeError: <name> must be an integer
+==================================================
+
+    test None
         >>> bg.integer_validator("distance", None)
         Traceback (most recent call last):
         TypeError: distance must be an integer
 
+    test a positive float
         >>> bg.integer_validator("distance", 3.5)
         Traceback (most recent call last):
         TypeError: distance must be an integer
 
+    test a negative float
         >>> bg.integer_validator("distance", -3.5)
         Traceback (most recent call last):
         TypeError: distance must be an integer
 
+    test a string
         >>> bg.integer_validator("distance", "hello")
         Traceback (most recent call last):
         TypeError: distance must be an integer
@@ -80,27 +83,39 @@ try differents no-working text
         Traceback (most recent call last):
         TypeError: my_int must be an integer
 
-    Error: NameError: name 'area' is not defined
+==================================================
+Error: NameError: name 'area' is not defined
+==================================================
+
         >>> bg.integer_validator("my_int", area)
         Traceback (most recent call last):
         NameError: name 'area' is not defined
 
-    Error: missing argument
-        >>> bg.integer_validator("distance")
-        Traceback (most recent call last):
-        TypeError: integer_validator() missing 1 required positional argument: 'value'
-
-    Error: missing argument
-        >>> bg.integer_validator()
-        Traceback (most recent call last):
-        TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
+==================================================
+Exception: area() is not implemented
+==================================================
 
     Error: missing argument
         >>> bg.area()
         Traceback (most recent call last):
         Exception: area() is not implemented
 
-    Error: missing argument
+==================================================
+Error: missing argument
+==================================================
+
+        >>> bg.integer_validator("distance")
+        Traceback (most recent call last):
+        TypeError: integer_validator() missing 1 required positional argument: 'value'
+
+        >>> bg.integer_validator()
+        Traceback (most recent call last):
+        TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
+
+==================================================
+Error: too many arguments
+==================================================
+
         >>> bg.area(12)
         Traceback (most recent call last):
         TypeError: area() takes 1 positional argument but 2 were given
@@ -110,16 +125,22 @@ try differents no-working text
         Traceback (most recent call last):
         TypeError: integer_validator() takes 3 positional arguments but 4 were given
 
+==================================================
+ValueError: My_int must be greater than 0
+==================================================
+
     with number = 0
     Error: ValueError: My_int must be greater than 0
         >>> bg.integer_validator("My_int", 0)
         Traceback (most recent call last):
         ValueError: My_int must be greater than 0
 
+==================================================
+ValueError: My_int must be greater than 0
+==================================================
+
     with negative number
     Error: ValueError: My_int must be greater than 0
         >>> bg.integer_validator("My_int", -1)
         Traceback (most recent call last):
         ValueError: My_int must be greater than 0
-
-
