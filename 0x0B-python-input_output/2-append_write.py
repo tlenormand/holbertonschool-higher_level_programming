@@ -22,6 +22,4 @@ def append_write(filename="", text=""):
     with open("filename", "a") as outFile:
         outFile.write(text)
 
-    outFile.close()
-
     return len(text)

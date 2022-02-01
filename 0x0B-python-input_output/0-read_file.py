@@ -18,6 +18,5 @@ def read_file(filename=""):
         None
     """
     with open("filename") as outFile:
-        print(outFile.read())
+        print(outFile.read(), end="")
 
-    outFile.close()

@@ -21,6 +21,4 @@ def write_file(filename="", text=""):
     with open("filename", "w") as outFile:
         outFile.write(text)
 
-    outFile.close()
-
     return len(text)
