@@ -6,8 +6,6 @@ Class:
     Student
 """
 
-import json
-
 
 class Student:
     """
@@ -38,6 +36,5 @@ class Student:
         retrieves a dictionary representation of a Student instance
 
         Returns: a dictionary representation of a Student instance
-
         """
         return self.__dict__
