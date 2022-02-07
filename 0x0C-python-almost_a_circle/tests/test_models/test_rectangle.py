@@ -590,8 +590,8 @@ class TestRectangle(unittest.TestCase):
         r1 = Rectangle(10, 7, 2, 8, 10)
         r2 = Rectangle(2, 4, 0, 0, 19)
         filename = r1.__class__.__name__ + ".json"
-        s = '[{"x": 2, "y": 8, "id": 10, "height": 7, "width": 10}, '
-        s2 = '{"x": 0, "y": 0, "id": 19, "height": 4, "width": 2}]'
+        s = '[{"id": 10, "width": 10, "height": 7, "x": 2, "y": 8}, '
+        s2 = '{"id": 19, "width": 2, "height": 4, "x": 0, "y": 0}]'
         s3 = s + s2
         Rectangle.save_to_file([r1, r2])
         with open(filename, "r") as file:

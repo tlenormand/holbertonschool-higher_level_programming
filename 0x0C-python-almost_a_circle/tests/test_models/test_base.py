@@ -212,8 +212,8 @@ class TestBase(unittest.TestCase):
         module_class = len(Base.load_from_file_csv.__doc__)
         self.assertGreater(module_class, 0)
 
-        module_class = len(Base.draw.__doc__)
-        self.assertGreater(module_class, 0)
+        # module_class = len(Base.draw.__doc__)
+        # self.assertGreater(module_class, 0)
 
     def test_conformance(self):
         """Test that we conform to PEP-8."""
