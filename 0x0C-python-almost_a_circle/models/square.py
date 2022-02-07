@@ -78,9 +78,6 @@ class Square(Rectangle):
 
         if (len(args)):
             for i in range(len(args)):
-                if args[1]:
-                    self.width = args[1]
-                    self.height = args[1]
                 setattr(self, arg_list[i], args[i])
 
         for k, v in kwargs.items():
