@@ -103,7 +103,7 @@ class Square(Rectangle):
         Returns:
             the size of the Rectangle
         """
-        return self.__size
+        return self.width
 
     @size.setter
     def size(self, value):
@@ -117,4 +117,5 @@ class Square(Rectangle):
             None
         """
         self.check_value("width", value)
-        self.__size = value
+        self.width = value
+        self.height = value
