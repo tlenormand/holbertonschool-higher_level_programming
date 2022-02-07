@@ -368,8 +368,13 @@ class TestRectangle(unittest.TestCase):
         with self.assertRaises(TypeError):
             Rectangle(1, 2, 3, None)
 
-    def test_priority_width_height(self):
-        """fuction that test for TypeError"""
+    ##########################################################
+    # Error priority
+    ##########################################################
+
+    def test_priority_width(self):
+        """fuction that test for priority"""
+        # priority width on height
         with self.assertRaisesRegex(TypeError, "width must be an integer"):
             Rectangle("str", "str", 3, None)
         with self.assertRaisesRegex(TypeError, "width must be an integer"):
@@ -378,6 +383,57 @@ class TestRectangle(unittest.TestCase):
             Rectangle(-1, -2, 3, None)
         with self.assertRaisesRegex(ValueError, "width must be > 0"):
             Rectangle(-1, "str", 3, None)
+        # priority width on x
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Rectangle("str", 2, -2, None)
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Rectangle("str", 2, "str", None)
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Rectangle(-1, 2, -2, None)
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Rectangle(-1, 2, "str", None)
+        # priority width on y
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Rectangle("str", 2, 3, -2)
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Rectangle("str", 2, 3, "str")
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Rectangle(-1, 2, 3, -2)
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Rectangle(-1, 2, 3, "str")
+
+    def test_priority_height(self):
+        """fuction that test for priority"""
+        # priority height on x
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, "str", -2, None)
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, "str", "str", None)
+        with self.assertRaisesRegex(ValueError, "height must be > 0"):
+            Rectangle(2, -2, -2, None)
+        with self.assertRaisesRegex(ValueError, "height must be > 0"):
+            Rectangle(2, -2, "str", None)
+        # priority height on y
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, "str", 3, -2)
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, "str", 3, "str")
+        with self.assertRaisesRegex(ValueError, "height must be > 0"):
+            Rectangle(1, -2, 3, -2)
+        with self.assertRaisesRegex(ValueError, "height must be > 0"):
+            Rectangle(1, -2, 3, "str")
+
+    def test_priority_x(self):
+        """fuction that test for priority"""
+        # priority x on y
+        with self.assertRaisesRegex(TypeError, "x must be an integer"):
+            Rectangle(1, 2, "str", "str")
+        with self.assertRaisesRegex(TypeError, "x must be an integer"):
+            Rectangle(1, 2, "str", -2)
+        with self.assertRaisesRegex(ValueError, "x must be >= 0"):
+            Rectangle(2, 2, -2, -2)
+        with self.assertRaisesRegex(ValueError, "x must be >= 0"):
+            Rectangle(2, 2, -2, "str")
 
     ##########################################################
     # __str__
