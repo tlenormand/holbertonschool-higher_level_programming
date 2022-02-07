@@ -557,7 +557,8 @@ class TestRectangle(unittest.TestCase):
         """Check the both saveto, and loadfrom function to a json file"""
         r1 = Rectangle(1, 2, 3, 4, 1)
         r2 = Rectangle(1, 2, 3, 4, 2)
-        listOfRectsInput = [r1, r2]
+        r3 = Rectangle(1, 2, 3, 4, 2)
+        listOfRectsInput = [r1, r2, r3]
         Rectangle.save_to_file(listOfRectsInput)
         listOfRectsOutput = Rectangle.load_from_file()
         self.assertEqual(
