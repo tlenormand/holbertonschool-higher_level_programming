@@ -16,6 +16,7 @@ Rectangle = rectangle.Rectangle
 
 
 class TestRectangle(unittest.TestCase):
+
     """
     class that test the max integer function
     ValueError:
@@ -25,7 +26,6 @@ class TestRectangle(unittest.TestCase):
         negative y
         zero width
         zero height
-
     TypeError:
         too many arguments
         too few arguments
@@ -66,12 +66,10 @@ class TestRectangle(unittest.TestCase):
     """
 
     def setUp(self):
-        """reset instances"""
         Base._Base__nb_objects = 0
         pass
 
     def tearDown(self):
-        """init the test"""
         pass
 
     def test_documentation(self):
@@ -113,6 +111,17 @@ class TestRectangle(unittest.TestCase):
         module_class = len(Rectangle.to_dictionary.__doc__)
         self.assertGreater(module_class, 0)
 
+    def test_priority_width_height(self):
+        """fuction that test for TypeError"""
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Rectangle("str", "str", 3, None)
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Rectangle("str", -2, 3, None)
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Rectangle(-1, -2, 3, None)
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Rectangle(-1, "str", 3, None)
+
     def test_subclass(self):
         """fuction that test if Rectangle is a subclass of Base"""
         self.assertTrue(issubclass(Rectangle, Base))
@@ -148,9 +157,8 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(r3.x, 0)
         self.assertEqual(r3.y, 0)
 
-    ##########################################################
     # ValueError
-    ##########################################################
+
     def test_negative_width(self):
         """fuction that test for ValueError"""
         with self.assertRaises(ValueError):
@@ -182,11 +190,14 @@ class TestRectangle(unittest.TestCase):
         """fuction that test for ValueError"""
         with self.assertRaises(ValueError):
             r1 = Rectangle(10, 2)
-            r1.width = 0
+            r1.height = 0
 
-    ##########################################################
+    def test_zero_height2(self):
+        """fuction that test for ValueError"""
+        with self.assertRaises(ValueError):
+            r1 = Rectangle(10, 0)
+
     # TypeError
-    ##########################################################
 
     def test_too_many_arguments(self):
         """fuction that test for TypeError"""
@@ -197,6 +208,11 @@ class TestRectangle(unittest.TestCase):
         """fuction that test for TypeError"""
         with self.assertRaises(TypeError):
             Rectangle(1)
+
+    def test_zero_arguments(self):
+        """fuction that test for TypeError"""
+        with self.assertRaises(TypeError):
+            Rectangle()
 
     # string
     def test_string_width(self):
@@ -347,6 +363,24 @@ class TestRectangle(unittest.TestCase):
         with self.assertRaises(TypeError):
             Rectangle(1, 2, 3, {"hello": 12})
 
+    # Bool :
+
+    def test_Bool_width(self):
+        with self.assertRaises(TypeError):
+            Rectangle(True, 10, 8, 8)
+
+    def test_Bool_height(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, True, 8, 8)
+
+    def test_Bool_x(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, 10, True, 8)
+
+    def test_Bool_y(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, 5, 8, True)
+
     # None
     def test_None_width(self):
         """fuction that test for TypeError"""
@@ -368,94 +402,21 @@ class TestRectangle(unittest.TestCase):
         with self.assertRaises(TypeError):
             Rectangle(1, 2, 3, None)
 
-    ##########################################################
-    # Error priority
-    ##########################################################
-
-    def test_priority_width(self):
-        """fuction that test for priority"""
-        # priority width on height
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            Rectangle("str", "str", 3, None)
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            Rectangle("str", -2, 3, None)
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            Rectangle(-1, -2, 3, None)
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            Rectangle(-1, "str", 3, None)
-        # priority width on x
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            Rectangle("str", 2, -2, None)
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            Rectangle("str", 2, "str", None)
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            Rectangle(-1, 2, -2, None)
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            Rectangle(-1, 2, "str", None)
-        # priority width on y
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            Rectangle("str", 2, 3, -2)
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            Rectangle("str", 2, 3, "str")
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            Rectangle(-1, 2, 3, -2)
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            Rectangle(-1, 2, 3, "str")
-
-    def test_priority_height(self):
-        """fuction that test for priority"""
-        # priority height on x
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(1, "str", -2, None)
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(1, "str", "str", None)
-        with self.assertRaisesRegex(ValueError, "height must be > 0"):
-            Rectangle(2, -2, -2, None)
-        with self.assertRaisesRegex(ValueError, "height must be > 0"):
-            Rectangle(2, -2, "str", None)
-        # priority height on y
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(1, "str", 3, -2)
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(1, "str", 3, "str")
-        with self.assertRaisesRegex(ValueError, "height must be > 0"):
-            Rectangle(1, -2, 3, -2)
-        with self.assertRaisesRegex(ValueError, "height must be > 0"):
-            Rectangle(1, -2, 3, "str")
-
-    def test_priority_x(self):
-        """fuction that test for priority"""
-        # priority x on y
-        with self.assertRaisesRegex(TypeError, "x must be an integer"):
-            Rectangle(1, 2, "str", "str")
-        with self.assertRaisesRegex(TypeError, "x must be an integer"):
-            Rectangle(1, 2, "str", -2)
-        with self.assertRaisesRegex(ValueError, "x must be >= 0"):
-            Rectangle(2, 2, -2, -2)
-        with self.assertRaisesRegex(ValueError, "x must be >= 0"):
-            Rectangle(2, 2, -2, "str")
-
-    ##########################################################
     # __str__
-    ##########################################################
 
     def test___str__(self):
         """fuction that test for __str__()"""
         r1 = Rectangle(1, 2, 0, 0, 1212121212)
         self.assertEqual(r1.__str__(), "[Rectangle] (1212121212) 0/0 - 1/2")
 
-    ##########################################################
     # area
-    ##########################################################
 
     def test_area(self):
         """fuction that test for area()"""
         r1 = Rectangle(12, 43)
         self.assertEqual(r1.area(), 516)
 
-    ##########################################################
     # display
-    ##########################################################
 
     def test_diplay(self):
         """Check display func"""
@@ -471,9 +432,7 @@ class TestRectangle(unittest.TestCase):
             self.assertEqual(
                 output, (2 * "\n" + (" " * 3 + "#" * 8 + "\n") * 7))
 
-    ##########################################################
     # update
-    ##########################################################
 
     def test_update(self):
         """fuction that test for update()"""
@@ -581,9 +540,7 @@ class TestRectangle(unittest.TestCase):
         r1.update(ThomasLeBoss="oui")
         self.assertEqual(str(r1), "[Rectangle] (4) 3/2 - 8/7")
 
-    ##########################################################
     # to_dictionary
-    ##########################################################
 
     def test_to_dictionary(self):
         """fuction that test for to_dictionary()"""
@@ -603,9 +560,7 @@ class TestRectangle(unittest.TestCase):
             {"id": 2, "width": 1, "height": 3, "x": 0, "y": 0},
         )
 
-    ##########################################################
     # create
-    ##########################################################
 
     def test_create(self):
         """Test create a rectangle"""
@@ -616,9 +571,41 @@ class TestRectangle(unittest.TestCase):
         self.assertNotEqual(r1, r2)
         self.assertIsNot(r1, r2)
 
-    ##########################################################
     # save_to_file | load_from_file || save_to_file_csv | load_form_file_csv
-    ##########################################################
+
+    def test_load_from_file(self):
+        r6 = Rectangle(10, 7, 2, 8, 89)
+        r7 = Rectangle(2, 4, 0, 0, 90)
+        list_rectangles_input = [r6, r7]
+        Rectangle.save_to_file(list_rectangles_input)
+        list_rectangles_output = Rectangle.load_from_file()
+        r8 = list_rectangles_output[0]
+        r9 = list_rectangles_output[1]
+        self.assertIsInstance(r8, Rectangle)
+        self.assertIsInstance(r9, Rectangle)
+        self.assertIsNot(r6, r8)
+        self.assertIsNot(r7, r9)
+
+    def test_save_to_file(self):
+        r1 = Rectangle(10, 7, 2, 8, 10)
+        r2 = Rectangle(2, 4, 0, 0, 19)
+        filename = r1.__class__.__name__ + ".json"
+        s = '[{"x": 2, "y": 8, "id": 10, "height": 7, "width": 10}, '
+        s2 = '{"x": 0, "y": 0, "id": 19, "height": 4, "width": 2}]'
+        s3 = s + s2
+        Rectangle.save_to_file([r1, r2])
+        with open(filename, "r") as file:
+            f = (file.read())
+        self.assertEqual(
+            f, s3)
+        Rectangle.save_to_file(None)
+        with open(filename, "r") as file:
+            f = (file.read())
+        self.assertEqual(f, '[]')
+        Rectangle.save_to_file([])
+        with open(filename, "r") as file:
+            f = (file.read())
+        self.assertEqual(f, '[]')
 
     def test_saveToFile_loadFromFile(self):
         """Check the both saveto, and loadfrom function to a json file"""

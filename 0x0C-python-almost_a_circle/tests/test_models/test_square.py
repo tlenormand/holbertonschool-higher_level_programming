@@ -1,366 +1,328 @@
 #!/usr/bin/python3
+"""
+This is the "test_square" module
+Thes test_square module supplies a class to test class Square
+"""
 
+from re import S
 import unittest
-from models import square
-from models.square import Square
-from models.rectangle import Rectangle
 from models.base import Base
-import pycodestyle
+from models.rectangle import Rectangle
+from models.square import Square
+from os.path import exists
 import io
 from contextlib import redirect_stdout
 
 
-class TestSquareClass(unittest.TestCase):
+class TestSquare(unittest.TestCase):
+    """
+    test classe square
+    """
 
     def setUp(self):
-        """reset instances"""
         Base._Base__nb_objects = 0
         pass
 
     def tearDown(self):
-        """init the test"""
         pass
 
-    def test_documentation(self):
-        """Test the documentations of class Square"""
-        len_doc = len(square.__doc__)
-        self.assertGreater(len_doc, 0)
-
-        len_doc = len(Square.__doc__)
-        self.assertGreater(len_doc, 0)
-
-        len_doc = len(Square.__init__.__doc__)
-        self.assertGreater(len_doc, 0)
-
-        len_doc = len(Square.size.__doc__)
-        self.assertGreater(len_doc, 0)
-
-        len_doc = len(Square.__str__.__doc__)
-        self.assertGreater(len_doc, 0)
-
-        len_doc = len(Square.update.__doc__)
-        self.assertGreater(len_doc, 0)
-
-        len_doc = len(Square.to_dictionary.__doc__)
-        self.assertGreater(len_doc, 0)
-
     def test_subclass(self):
-        """Test if square is a subclass of Rectangle and Base"""
-        self.assertTrue(issubclass(Square, Rectangle))
+        """fuction that test if Rectangle is a subclass of Base"""
         self.assertTrue(issubclass(Square, Base))
 
-    def test_conformance(self):
-        """Test if the module Square respect PEP8"""
-        style = pycodestyle.StyleGuide(quiet=True)
-        result = style.check_files(['models/square.py'])
-        self.assertEqual(
-            result.total_errors, 0, "Found code style errors (and warnings)."
-        )
+    def test_subclass(self):
+        """fuction that test if Rectangle is a subclass of Base"""
+        self.assertTrue(issubclass(Square, Rectangle))
 
-    def test_valid_case(self):
-        """Test some valid cases with Square"""
-        s1 = Square(5)
-        # self.assertEqual(s1.id, 29)
-        self.assertEqual(s1.size, 5)
-        self.assertEqual(s1.x, 0)
-        self.assertEqual(s1.y, 0)
-        self.assertEqual(s1.width, 5)
-        self.assertEqual(s1.height, 5)
+    # test correct values
 
-        s2 = Square(653, 54, 43, 963)
-        self.assertEqual(s2.id, 963)
-        self.assertEqual(s2.size, 653)
-        self.assertEqual(s2.x, 54)
-        self.assertEqual(s2.y, 43)
-        self.assertEqual(s2.width, 653)
-        self.assertEqual(s2.height, 653)
+    def test_correct_values(self):
+        r1 = Square(2, 4, 6)
+        self.assertEqual(r1.size, 2)
+        self.assertEqual(r1.x, 4)
+        self.assertEqual(r1.y, 6)
+        self.assertEqual(r1.id, 1)
 
-        s3 = Square(4, 3, 3, None)
-        # self.assertEqual(s3.id, 30)
-        self.assertEqual(s3.size, 4)
-        self.assertEqual(s3.x, 3)
-        self.assertEqual(s3.y, 3)
-        self.assertEqual(s3.width, 4)
-        self.assertEqual(s3.height, 4)
+        r2 = Square(2, 4, 6, 50)
+        self.assertEqual(r2.size, 2)
+        self.assertEqual(r2.x, 4)
+        self.assertEqual(r2.y, 6)
+        self.assertEqual(r2.id, 50)
 
-    ##########################################################
-    # TypeError
-    ##########################################################
+        r3 = Square(2)
+        self.assertEqual(r3.size, 2)
+        self.assertEqual(r3.x, 0)
+        self.assertEqual(r3.y, 0)
+        self.assertEqual(r3.id, 2)
 
-    def test_TypeError_no_arguments(self):
+
+    def test_priority_width_height(self):
         """fuction that test for TypeError"""
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Square("str", "str", 3, None)
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Square("str", -2, 3, None)
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Square(-1, -2, 3, None)
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Square(-1, "str", 3, None)
+
+    # tests getters
+
+    def test_getter_width(self):
+        r4 = Square(2, 4, 6)
+        self.assertEqual(r4.size, 2)
+
+    def test_getter_x(self):
+        r4 = Square(2, 4, 6)
+        self.assertEqual(r4.x, 4)
+
+    def test_getter_y(self):
+        r4 = Square(2, 4, 6)
+        self.assertEqual(r4.y, 6)
+
+    # tests setters #
+
+    def test_setter_width(self):
+        r4 = Square(2, 4, 6)
+        r4.size = 100
+        self.assertEqual(r4.size, 100)
+
+    def test_setter_x(self):
+        r4 = Square(2, 4, 6)
+        r4.x = 10
+        self.assertEqual(r4.x, 10)
+
+    def test_setter_y(self):
+        r4 = Square(2, 4, 6)
+        r4.y = 12
+        self.assertEqual(r4.y, 12)
+
+    # tests ValueError
+
+    def test_negative_size(self):
+        with self.assertRaises(ValueError):
+            Square(-5, 10, 8)
+
+    def test_zero_size(self):
+        with self.assertRaises(ValueError):
+            Square(0, 10, 8)
+
+    def test_negative_x(self):
+        with self.assertRaises(ValueError):
+            Square(6, -8, 8)
+
+    def test_negative_y(self):
+        with self.assertRaises(ValueError):
+            Square(5, 8, -7)
+
+    # tests TypeError
+
+    def test_too_many_arguments(self):
         with self.assertRaises(TypeError):
-            Square()
+            Square(1, 2, 3, 4, 5, 6)
 
-    def test_TypeError_too_many_arguments(self):
-        """fuction that test for TypeError"""
+    # str :
+
+    def test_string_size(self):
         with self.assertRaises(TypeError):
-            Square(2, 2, 2, 2, 2, 2, 2, 2)
+            Square("hello", 10, 8)
 
-    # string
-
-    def test_TypeError_string_size(self):
-        """fuction that test for TypeError"""
+    def test_string_x(self):
         with self.assertRaises(TypeError):
-            Square("oui")
+            Square(10, "hello", 8)
 
-    def test_TypeError_string_x(self):
-        """fuction that test for TypeError"""
+    def test_string_y(self):
         with self.assertRaises(TypeError):
-            Square(2, "e", 2, 2)
+            Square(10, 5, "hello")
 
-    def test_TypeError_string_y(self):
-        """fuction that test for TypeError"""
-        with self.assertRaises(TypeError):
-            Square(2, 2, "e", 2)
+    # list :
 
-    # float
-
-    def test_TypeError_float_size(self):
-        """fuction that test for TypeError"""
-        with self.assertRaises(TypeError):
-            Square(4.5)
-
-    def test_TypeError_float_x(self):
-        """fuction that test for TypeError"""
-        with self.assertRaises(TypeError):
-            Square(2, 4.5, 2, 2)
-
-    def test_TypeError_float_y(self):
-        """fuction that test for TypeError"""
-        with self.assertRaises(TypeError):
-            Square(2, 2, 4.5, 2)
-
-    # list
     def test_list_size(self):
-        """fuction that test for TypeError"""
         with self.assertRaises(TypeError):
-            Square([1, 1])
+            Square([0, 1, 2], 10, 8)
 
     def test_list_x(self):
-        """fuction that test for TypeError"""
         with self.assertRaises(TypeError):
-            Square(1, [3, 3], 4)
+            Square(10, 10, [0, 1, 2], 8)
 
     def test_list_y(self):
-        """fuction that test for TypeError"""
         with self.assertRaises(TypeError):
-            Square(1, 2, [4, 4])
+            Square(10, 5, [0, 1, 2])
 
-    # tuple
-    def test_tuple_width(self):
-        """fuction that test for TypeError"""
+    # tuple :
+
+    def test_tuple_size(self):
         with self.assertRaises(TypeError):
-            Square((1, 1), 2, 3)
+            Square((0, 1, 2), 10, 8, 8)
 
     def test_tuple_x(self):
-        """fuction that test for TypeError"""
         with self.assertRaises(TypeError):
-            Square(1, 2, (3, 3))
+            Square(10, (0, 1, 2), 8)
 
     def test_tuple_y(self):
-        """fuction that test for TypeError"""
         with self.assertRaises(TypeError):
-            Square(1, 2, (4, 4))
+            Square(10, 5, (0, 1, 2))
 
-    # dict
-    def test_dict_width(self):
-        """fuction that test for TypeError"""
-        with self.assertRaises(TypeError):
-            Square({"hello": 12}, 2, 3)
+    # float :
 
-    def test_dict_y(self):
-        """fuction that test for TypeError"""
+    def test_float_size(self):
         with self.assertRaises(TypeError):
-            Square(1, {"hello": 12}, 3)
+            Square(3.5, 10, 8)
 
-    def test_dict_x(self):
-        """fuction that test for TypeError"""
+    def test_float_x(self):
         with self.assertRaises(TypeError):
-            Square(1, 2, {"hello": 12})
+            Square(10, 3.5, 8)
 
-    # None
-    def test_None_width(self):
-        """fuction that test for TypeError"""
+    def test_float_y(self):
         with self.assertRaises(TypeError):
-            Square(None, 2, 3)
+            Square(10, 5, 3.5)
 
-    def test_None_y(self):
-        """fuction that test for TypeError"""
+    def test_float_nan_size(self):
         with self.assertRaises(TypeError):
-            Square(1, None, 4)
+            Square(float('nan'), 10, 8)
+
+    def test_float_nan_x(self):
+        with self.assertRaises(TypeError):
+            Square(10, float('nan'), 8)
+
+    def test_float_nan_y(self):
+        with self.assertRaises(TypeError):
+            Square(10, 5, float('nan'))
+
+    def test_float_inf_size(self):
+        with self.assertRaises(TypeError):
+            Square(float('inf'), 10, 8, 8)
+
+    def test_float_inf_x(self):
+        with self.assertRaises(TypeError):
+            Square(10, float('inf'), 8)
+
+    def test_float_inf_y(self):
+        with self.assertRaises(TypeError):
+            Square(10, 5, float('inf'))
+
+    # Bool :
+
+    def test_Bool_size(self):
+        with self.assertRaises(TypeError):
+            Square(True, 10, 8)
+
+    def test_Bool_x(self):
+        with self.assertRaises(TypeError):
+            Square(10, True, 8)
+
+    def test_Bool_y(self):
+        with self.assertRaises(TypeError):
+            Square(10, 5, True)
+
+    # None :
+
+    def test_None_size(self):
+        with self.assertRaises(TypeError):
+            Square(None, 10, 8)
 
     def test_None_x(self):
-        """fuction that test for TypeError"""
         with self.assertRaises(TypeError):
-            Square(1, 2, None)
+            Square(10, None, 8)
 
-    ##########################################################
-    # __str__
-    ##########################################################
+    def test_None_y(self):
+        with self.assertRaises(TypeError):
+            Square(10, 5, None)
 
-    def test___str__(self):
-        """fuction that test for __str__()"""
-        r1 = Square(1, 2, 0, 1212121212)
-        self.assertEqual(r1.__str__(), "[Square] (1212121212) 2/0 - 1")
+    # tests Area
 
-    ##########################################################
-    # area
-    ##########################################################
+    def test_aera(self):
+        r1 = Square(10, 0, 0)
+        self.assertEqual(r1.area(), 100)
 
-    def test_area(self):
-        """fuction that test for area()"""
-        r1 = Square(12)
-        self.assertEqual(r1.area(), 144)
-
-    ##########################################################
-    # display
-    ##########################################################
-
+    # tests Display
     def test_diplay(self):
         """Check display func"""
-        r1 = Square(8)
-        r2 = Square(8, 7, 3)
+        s1 = Square(2)
+        s2 = Square(4, 2, 2)
         with io.StringIO() as buf, redirect_stdout(buf):
-            r1.display()
+            s1.display()
             output = buf.getvalue()
-            self.assertEqual(output, ("#" * 8 + "\n") * 8)
+            self.assertEqual(output, ("#" * 2 + "\n")*2)
         with io.StringIO() as buf, redirect_stdout(buf):
-            r2.display()
+            s2.display()
             output = buf.getvalue()
-            self.assertEqual(output, (3 * "\n" + (" " * 7 + "#" * 8 + "\n") * 8))
+            self.assertEqual(
+                output, (2 * "\n" + (" " * 2 + "#" * 4 + "\n") * 4))
+    # tests __str___
 
-    ##########################################################
-    # update
-    ##########################################################
+    def test_str(self):
+        r1 = Square(10, 10, 0)
+        r2 = Square(10)
+        r3 = Square(10, 10, 10, 50)
+        self.assertEqual(r1.__str__(), "[Square] (1) 10/0 - 10")
+        self.assertEqual(r2.__str__(), "[Square] (2) 0/0 - 10")
+        self.assertEqual(r3.__str__(), "[Square] (50) 10/10 - 10")
+
+    # tests Update
 
     def test_update(self):
-        """fuction that test for update()"""
-        r1 = Square(7, 3, 2, 4)
-        r1.update(1234567890, 1, 2, 3)
+        r1 = Square(10, 10, 10)
+        # *args
+        r1.update(50, 25)
+        self.assertEqual(r1.id, 50)
+        self.assertEqual(r1.size, 25)
+        # **kwargs
+        r1.update(size=50, id=80)
+        self.assertEqual(r1.id, 80)
+        self.assertEqual(r1.size, 50)
+        # *args & **kwars
+        r1.update(55, 55, size=50, id=80)
+        self.assertEqual(r1.id, 80)
+        self.assertEqual(r1.size, 50)
 
-        self.assertEqual(r1.id, 1234567890)
-        self.assertEqual(r1.size, 1)
-        self.assertEqual(r1.width, 1)
-        self.assertEqual(r1.height, 1)
-        self.assertEqual(r1.x, 2)
-        self.assertEqual(r1.y, 3)
+    # test to_dictionary
 
-        r1.update(size=131)
-        self.assertEqual(r1.size, 131)
-        self.assertEqual(r1.width, 131)
-        self.assertEqual(r1.height, 131)
+    def test_to_dictionnary(self):
+        r1 = Square(10, 10, 0)
+        # test return type
+        self.assertTrue(type(r1.to_dictionary()), dict)
+        # test return
+        self.assertEqual(r1.to_dictionary(), {
+                         'id': 1, 'size': 10, 'x': 10, 'y': 0})
 
-        r1.update(size=454, y=1)
-        self.assertEqual(r1.size, 454)
-        self.assertEqual(r1.width, 454)
-        self.assertEqual(r1.height, 454)
-        self.assertEqual(r1.y, 1)
-
-        r1.update()
-        self.assertEqual(r1.height, 454)
-
-    def test_update_error(self):
-        """Function to test different error case of uptdate"""
-        r1 = Square(7, 3, 2)
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            r1.update(1, "str")
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            r1.update(1, [1, 2])
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            r1.update(1, -1)
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            r1.update(1, 0)
-        with self.assertRaisesRegex(TypeError, "x must be an integer"):
-            r1.update(1, 1, "str")
-        with self.assertRaisesRegex(TypeError, "x must be an integer"):
-            r1.update(1, 1, [1, 2])
-        with self.assertRaisesRegex(ValueError, "x must be >= 0"):
-            r1.update(1, 1, -1)
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            r1.update(1, 1, 1, "str")
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            r1.update(1, 1, 1, [1, 2])
-        with self.assertRaisesRegex(ValueError, "y must be >= 0"):
-            r1.update(1, 1, 1, -1)
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            r1.update(size="str")
-        with self.assertRaisesRegex(TypeError, "width must be an integer"):
-            r1.update(size=[1, 2, 3])
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            r1.update(size=-1)
-        with self.assertRaisesRegex(ValueError, "width must be > 0"):
-            r1.update(size=0)
-        with self.assertRaisesRegex(TypeError, "x must be an integer"):
-            r1.update(x="str")
-        with self.assertRaisesRegex(TypeError, "x must be an integer"):
-            r1.update(x=[1, 2, 3])
-        with self.assertRaisesRegex(ValueError, "x must be >= 0"):
-            r1.update(x=-1)
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            r1.update(y="str")
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            r1.update(y=[1, 2, 3])
-        with self.assertRaisesRegex(ValueError, "y must be >= 0"):
-            r1.update(y=-1)
-
-    def test_updateTooMuchArg(self):
-        """Test update with to much arg"""
-        r1 = Square(8, 7, 3, 4)
-        self.assertEqual(str(r1), "[Square] (4) 7/3 - 8")
-        # r1.update(4, 3, 2, 1, 0, 2)
-        # self.assertEqual(str(r1), "[Square] (4) 2/1 - 3")
-
-    def test_updateWithoutArg(self):
-        """Test update with no arg"""
-        r1 = Square(8, 7, 3, 2)
-        r1.update()
-        self.assertEqual(str(r1), "[Square] (2) 7/3 - 8")
-
-    def test_updateRandomKwarg(self):
-        """Test update with random Kwarg"""
-        r1 = Square(8, 7, 3, 2)
-        r1.update(ThomasLeBoss="Non")
-        self.assertEqual(str(r1), "[Square] (2) 7/3 - 8")
-
-    ##########################################################
-    # to_dictionary
-    ##########################################################
-
-    def test_to_dictionary(self):
-        """fuction that test for to_dictionary()"""
-        r1 = Square(1, 2, 3, 1234567890)
-        r2 = Square(1, 3, 4, None)
-        r3 = Square(1)
-        self.assertEqual(
-            r1.to_dictionary(),
-            {"id": 1234567890, "x": 2, "size": 1, "y": 3},
-        )
-        self.assertEqual(
-            r2.to_dictionary(),
-            {"id": 1, "x": 3, "size": 1, "y": 4},
-        )
-        self.assertEqual(
-            r3.to_dictionary(),
-            {"id": 2, "x": 0, "size": 1, "y": 0},
-        )
-
-    ##########################################################
-    # create
-    ##########################################################
-
-    def test_create(self):
-        """Test create a rectangle"""
-        r1 = Square(3, 5, 1)
-        r1_dictionary = r1.to_dictionary()
-        r2 = Square.create(**r1_dictionary)
-        self.assertEqual(r1.to_dictionary(), r2.to_dictionary())
-        self.assertNotEqual(r1, r2)
-        self.assertIsNot(r1, r2)
-
-    ##########################################################
     # save_to_file | load_from_file || save_to_file_csv | load_form_file_csv
-    ##########################################################
+
+    def test_load_from_file(self):
+
+        s6 = Square(10)
+        s7 = Square(2, 4, 0, 90)
+        list_squares_input = [s6, s7]
+        Square.save_to_file(list_squares_input)
+        list_squares_output = Square.load_from_file()
+        s8 = list_squares_output[0]
+        s9 = list_squares_output[1]
+        self.assertIsInstance(s8, Square)
+        self.assertIsInstance(s9, Square)
+        self.assertIsNot(s6, s8)
+        self.assertIsNot(s7, s9)
+
+    def test_save_to_file(self):
+
+        s1 = Square(10, 7, 8, 10)
+        s2 = Square(2, 4, 0, 19)
+        str1 = '[{"x": 7, "y": 8, "id": 10, "size": 10}, '
+        str2 = '{"x": 4, "y": 0, "id": 19, "size": 2}]'
+        str3 = str1 + str2
+        Square.save_to_file([s1, s2])
+        with open("Square.json", "r") as file:
+            f = (file.read())
+        self.assertEqual(
+            f, str3)
+        Square.save_to_file(None)
+        with open("Square.json", "r") as file:
+            f = (file.read())
+        self.assertEqual(f, '[]')
+        Square.save_to_file([])
+        with open("Square.json", "r") as file:
+            f = (file.read())
+        self.assertEqual(f, '[]')
 
     def test_saveToFile_loadFromFile(self):
         """Check the both saveto, and loadfrom function to a json file"""
