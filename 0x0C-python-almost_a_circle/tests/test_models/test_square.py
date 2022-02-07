@@ -248,17 +248,17 @@ class TestSquareClass(unittest.TestCase):
 
         r1.update(size=131)
         self.assertEqual(r1.size, 131)
-        # self.assertEqual(r1.width, 131)
-        # self.assertEqual(r1.height, 131)
+        self.assertEqual(r1.width, 131)
+        self.assertEqual(r1.height, 131)
 
         r1.update(size=454, y=1)
         self.assertEqual(r1.size, 454)
-        # self.assertEqual(r1.width, 454)
-        # self.assertEqual(r1.height, 454)
+        self.assertEqual(r1.width, 454)
+        self.assertEqual(r1.height, 454)
         self.assertEqual(r1.y, 1)
 
         r1.update()
-        # self.assertEqual(r1.height, 454)
+        self.assertEqual(r1.height, 454)
 
     def test_update_error(self):
         """Function to test different error case of uptdate"""

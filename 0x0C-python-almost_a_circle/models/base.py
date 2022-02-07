@@ -6,6 +6,7 @@ Class:
     Base: this class will be the “base” of all other classes in this project
 """
 
+import csv
 import json
 from os.path import exists
 
@@ -84,6 +85,7 @@ class Base:
             new = cls(1, 1)
         else:
             new = cls(1)
+
         new.update(**dictionary)
 
         return new
@@ -121,19 +123,26 @@ class Base:
         Returns:
             None
         """
+        rectangle_list = ["id", "width", "height", "x", "y", "\0"]
+        square_list = ["id", "size", "x", "y", "\0"]
+        write_list = ""
+
         if list_objs is None:
             list_objs = []
 
-        iteration = 0
-
         with open(cls.__name__ + ".csv", "w") as fd:
-            fd.write("[")
-            for obj in list_objs:
-                json.dump(obj.to_dictionary(), fd)
-                if iteration == 0:
-                    fd.write(", ")
-                    iteration += 1
-            fd.write("]")
+            if list_objs is None or list_objs == []:
+                fd.write("")
+            else:
+                if cls.__name__ == "Rectangle":
+                    write_list = rectangle_list
+                elif cls.__name__ == "Square":
+                    write_list = square_list
+
+                list_dict = csv.DictWriter(fd, fieldnames=write_list)
+                for obj in list_objs:
+                    list_dict.writerow(obj.to_dictionary())
+
         fd.close()
 
     @classmethod
@@ -145,15 +154,30 @@ class Base:
             a list of instances
         """
         list_instance = []
-        list_csv = []
 
         if exists(cls.__name__ + ".csv"):
             with open(cls.__name__ + ".csv", "r") as fd:
-                list_csv = cls.from_json_string(fd.read())
-            fd.close()
+                list_csv = csv.reader(fd)
+                for i in list_csv:
+                    if cls.__name__ == "Rectangle":
+                        new = {
+                            "id": int(i[0]),
+                            "width": int(i[1]),
+                            "height": int(i[2]),
+                            "x": int(i[3]),
+                            "y": int(i[4])
+                        }
 
-            for i in list_csv:
-                list_instance.append(cls.create(**i))
+                    if cls.__name__ == "Square":
+                        new = {
+                            "id": int(i[0]),
+                            "size": int(i[1]),
+                            "x": int(i[2]),
+                            "y": int(i[3])
+                        }
+
+                    new_instance = cls.create(**new)
+                    list_instance.append(new_instance)
 
         return list_instance
 
