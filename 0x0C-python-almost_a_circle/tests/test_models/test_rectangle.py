@@ -370,13 +370,13 @@ class TestRectangle(unittest.TestCase):
 
     def test_priority_width_height(self):
         """fuction that test for TypeError"""
-        with self.assertRaises(TypeError, "width must be an integer"):
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
             Rectangle("str", "str", 3, None)
-        with self.assertRaises(TypeError, "width must be an integer"):
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
             Rectangle("str", -2, 3, None)
-        with self.assertRaises(TypeError, "width must be an integer"):
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
             Rectangle(-1, -2, 3, None)
-        with self.assertRaises(TypeError, "width must be an integer"):
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
             Rectangle(-1, "str", 3, None)
 
     ##########################################################
