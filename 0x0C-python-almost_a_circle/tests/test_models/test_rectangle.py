@@ -368,6 +368,17 @@ class TestRectangle(unittest.TestCase):
         with self.assertRaises(TypeError):
             Rectangle(1, 2, 3, None)
 
+    def test_priority_width_height(self):
+        """fuction that test for TypeError"""
+        with self.assertRaises(TypeError, "width must be an integer"):
+            Rectangle("str", "str", 3, None)
+        with self.assertRaises(TypeError, "width must be an integer"):
+            Rectangle("str", -2, 3, None)
+        with self.assertRaises(TypeError, "width must be an integer"):
+            Rectangle(-1, -2, 3, None)
+        with self.assertRaises(TypeError, "width must be an integer"):
+            Rectangle(-1, "str", 3, None)
+
     ##########################################################
     # __str__
     ##########################################################
@@ -557,8 +568,7 @@ class TestRectangle(unittest.TestCase):
         """Check the both saveto, and loadfrom function to a json file"""
         r1 = Rectangle(1, 2, 3, 4, 1)
         r2 = Rectangle(1, 2, 3, 4, 2)
-        r3 = Rectangle(1, 2, 3, 4, 2)
-        listOfRectsInput = [r1, r2, r3]
+        listOfRectsInput = [r1, r2]
         Rectangle.save_to_file(listOfRectsInput)
         listOfRectsOutput = Rectangle.load_from_file()
         self.assertEqual(
