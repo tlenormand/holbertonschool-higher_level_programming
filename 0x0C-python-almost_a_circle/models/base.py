@@ -245,5 +245,5 @@ class Base:
                 skk.left(90)
                 skk.forward(square.height)
                 skk.left(90)
-    
+
         turtle.done()
