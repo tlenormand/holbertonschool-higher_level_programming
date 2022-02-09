@@ -9,6 +9,7 @@ Class:
 import csv
 import json
 from os.path import exists
+import turtle
 
 
 class Base:
@@ -210,3 +211,39 @@ class Base:
             return []
 
         return json.loads(json_string)
+
+    def draw(list_rectangles, list_squares):
+        """
+        draw Square and Rectangle using turtle
+
+        Arguments:
+            list_rectangles: list of rectangle
+            list_squares: list of square
+
+        Returns:
+            None
+        """
+        skk = turtle.Turtle()
+        skk.shape("turtle")
+
+        for rectangle in list_rectangles:
+            skk.penup()
+            skk.goto(rectangle.x, rectangle.y)
+            skk.pendown()
+            for i in range(2):
+                skk.forward(rectangle.width)
+                skk.left(90)
+                skk.forward(rectangle.height)
+                skk.left(90)
+
+        for square in list_squares:
+            skk.penup()
+            skk.goto(square.x, square.y)
+            skk.pendown()
+            for i in range(2):
+                skk.forward(square.width)
+                skk.left(90)
+                skk.forward(square.height)
+                skk.left(90)
+    
+        turtle.done()
