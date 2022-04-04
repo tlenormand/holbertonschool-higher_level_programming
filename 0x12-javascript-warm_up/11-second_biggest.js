@@ -10,7 +10,7 @@ for (let i = 1; listInt[i]; i++) {
   if (listInt[i] > max) {
     second = max;
     max = listInt[i];
-  } else if (listInt[i] > second) {
+  } else if (listInt[i] > second && listInt[i] != max) {
     second = listInt[i];
   }
 }
