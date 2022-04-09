@@ -24,10 +24,12 @@ if __name__ == "__main__":
         )
 
     query_rows = cur.fetchall()
-    output = []
-    for row in query_rows:
-        if row[1] == sys.argv[4]:
-            output.append(row[0])
-    print(*output, sep=', ')
+    Len = len(query_rows)
+    for i in range(Len):
+        print(query_rows[i][0], end='')
+        if (i == Len - 1):
+            print()
+        else:
+            print(", ", end='')
     cur.close()
     db.close()
