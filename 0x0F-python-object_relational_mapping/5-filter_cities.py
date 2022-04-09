@@ -4,7 +4,6 @@ script that takes in the name of a state as an argument and lists
 all cities of that state, using the database hbtn_0e_4_usa
 """
 import sys
-from turtle import st
 import MySQLdb
 
 if __name__ == "__main__":
@@ -17,10 +16,12 @@ if __name__ == "__main__":
     )
     cur = db.cursor()
     cur.execute(
-        ("SELECT cities.name, states.name \
+        "SELECT cities.name, states.name \
         FROM cities \
-        INNER JOIN states \
-        ON cities.state_id = states.id")
+        JOIN states \
+        ON cities.state_id = states.id \
+        WHERE states.name LIKE %s \
+        ORDER BY cities.id", (sys.argv[4],)
         )
 
     query_rows = cur.fetchall()
