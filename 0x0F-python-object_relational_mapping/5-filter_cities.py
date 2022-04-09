@@ -24,12 +24,6 @@ if __name__ == "__main__":
         )
 
     query_rows = cur.fetchall()
-    Len = len(query_rows)
-    for i in range(Len):
-        print(query_rows[i][0], end='')
-        if (i == Len - 1):
-            print()
-        else:
-            print(", ", end='')
+    print(", ".join(row[0] for row in query_rows))
     cur.close()
     db.close()
