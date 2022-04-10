@@ -18,7 +18,14 @@ if __name__ == "__main__":
         pool_pre_ping=True
     )
     session = Session(engine)
-    query = session.query(City, State).filter(City.state_id == State.id).order_by(City.id).all()
+    query = session.query(
+        City,
+        State
+    ).filter(
+        City.state_id == State.id
+    ).order_by(
+        City.id
+    ).all()
     for city, state in query:
         print("{}: {} -> {}".format(city.id, city.name, state.name))
 
