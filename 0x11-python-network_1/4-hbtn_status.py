@@ -3,8 +3,7 @@
 import requests
 
 
-with requests.get('https://intranet.hbtn.io/status') as response:
-    html = response.text
+html = requests.get('https://intranet.hbtn.io/status').text
 
 print("Body response:")
 print('\t- type:', type(html))
