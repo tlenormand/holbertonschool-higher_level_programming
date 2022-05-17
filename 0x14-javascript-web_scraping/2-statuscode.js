@@ -10,7 +10,7 @@ axios({
   url: process.argv[2]
 })
   .then((response) => {
-    console.log('code : ' + response.status);
+    console.log('code: ' + response.status);
   }, (error) => {
-    console.log('code : ' + error.response.status);
+    console.log('code: ' + error.response.status);
   });
