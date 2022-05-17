@@ -6,18 +6,18 @@ where the character “Wedge Antilles” is present (id 18)
 
 const axios = require('axios');
 
-axios({
-  method: 'get',
-  url: process.argv[2]
-})
-  .then((response) => {
+const url = process.argv[2];
+axios.get(url)
+  .then(response => {
     let count = 0;
-    let prop;
-    let character;
-    for (prop in response.data.results) {
-      for (character in response.data.results[prop].characters) {
-        if (response.data.results[prop].characters[character] === 'https://swapi-api.hbtn.io/api/people/18/') { count += 1; }
+    for (const film of response.data.results) {
+      for (const character of film.characters) {
+        if (character.includes('18')) {
+          count++;
+        }
       }
     }
     console.log(count);
-  });
+  }
+  )
+  .catch(err => console.log(err));
