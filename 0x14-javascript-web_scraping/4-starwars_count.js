@@ -20,6 +20,4 @@ axios({
       }
     }
     console.log(count);
-  }, (error) => {
-    console.log('code : ' + error.response.status);
   });
